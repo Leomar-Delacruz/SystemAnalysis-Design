@@ -1,43 +1,36 @@
 document.addEventListener("DOMContentLoaded", function () {
+    // Add an event listener for the button
     document.getElementById("fetchDocumentsBtn").addEventListener("click", function () {
+        // Fetch documents using AJAX
         fetchDocuments();
     });
 
-    document.getElementById("fetchAnotherSystemBtn").addEventListener("click", function () {
-        fetchAnotherSystem();
-    });
-
-    function fetchDocuments() {
-        fetch("get_documents.php")
-            .then(response => response.json())
-            .then(data => {
-                updateDocumentList(data);
-            })
-            .catch(error => {
-                console.error("Error fetching documents:", error);
-            });
-    }
-
-    function fetchAnotherSystem() {
-        console.log("Fetching documents for another system...");
-
-        // For demonstration, let's display a message
-        const documentList = document.getElementById("document-list");
-        documentList.innerHTML = "<li>Documents for Another System will be displayed here.</li>";
-    }
-
-    function updateDocumentList(documents) {
-        const documentList = document.getElementById("document-list");
-        documentList.innerHTML = ""; // Clear existing list
-
-        documents.forEach(document => {
-            const listItem = document.createElement("li");
-            listItem.innerHTML = `
-                <strong>${document.type}</strong>
-                <p>${document.description}</p>
-                <a href="download.php?filename=${document.filename}" target="_blank">Download</a>
-            `;
-            documentList.appendChild(listItem);
-        });
-    }
+    // Initial fetch when the page loads
+    fetchDocuments();
 });
+
+function fetchDocuments() {
+    // Fetch documents using AJAX
+    fetch("fetch_documents.php")
+        .then(response => response.json())
+        .then(data => {
+            // Display documents in the document list
+            displayDocuments(data);
+        })
+        .catch(error => console.error('Error fetching documents:', error));
+}
+
+function displayDocuments(documents) {
+    // Get the document list ul element
+    const documentList = document.getElementById("document-list");
+
+    // Clear the existing content
+    documentList.innerHTML = "";
+
+    // Populate the document list
+    documents.forEach(document => {
+        const listItem = document.createElement("li");
+        listItem.textContent = `${document.filename} - Type: ${document.type} - Description: ${document.description}`;
+        documentList.appendChild(listItem);
+    });
+}

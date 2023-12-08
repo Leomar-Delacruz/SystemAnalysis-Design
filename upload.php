@@ -1,7 +1,6 @@
 <?php
 require_once "database.php";
 
-// Handle document upload
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $targetDir = "uploads/";
     $targetFile = $targetDir . basename($_FILES["file"]["name"]);
@@ -29,24 +28,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($uploadOk === 0) {
         echo "Sorry, your file was not uploaded.";
     } else {
-        // Create the 'uploads' directory if it doesn't exist
-        if (!file_exists($targetDir)) {
-            mkdir($targetDir, 0755, true);
-        }
-
         // Move the file to the target directory
         if (move_uploaded_file($_FILES["file"]["tmp_name"], $targetFile)) {
             // Save document details to MySQL database
             saveDocumentDetails($conn, $_FILES["file"]["name"], $_POST["type"], $_POST["description"]);
 
-            // Retrieve the updated list of documents
-            $documents = getDocuments($conn);
-
-            // Return the list of documents as JSON for JavaScript to handle
-            echo json_encode($documents);
+            echo "The file " . htmlspecialchars(basename($_FILES["file"]["name"])) . " has been uploaded.";
         } else {
-            // Provide a more detailed error message for debugging
-            echo "Sorry, there was an error uploading your file. Check the 'uploads' directory permissions.";
+            echo "Sorry, there was an error uploading your file.";
         }
     }
 }
@@ -63,17 +52,5 @@ function saveDocumentDetails($conn, $filename, $type, $description) {
     }
 
     $stmt->close();
-}
-
-function getDocuments($conn) {
-    $documents = array();
-
-    $result = $conn->query("SELECT * FROM documents");
-
-    while ($row = $result->fetch_assoc()) {
-        $documents[] = $row;
-    }
-
-    return $documents;
 }
 ?>

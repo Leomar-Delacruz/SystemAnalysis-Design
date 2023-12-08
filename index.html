@@ -11,20 +11,20 @@
 
     <form action="upload.php" method="post" enctype="multipart/form-data">
         <label for="file">Choose a document to upload:</label>
-        <input type="file" name="file" id="file">
+        <input type="file" name="file" id="file" required>
         <br>
         <label for="type">Document Type:</label>
-        <input type="text" name="type" id="type">
+        <input type="text" name="type" id="type" required>
         <br>
         <label for="description">Description:</label>
-        <textarea name="description" id="description"></textarea>
+        <textarea name="description" id="description" required></textarea>
         <br>
         <input type="submit" value="Upload Document">
     </form>
 
     <hr>
 
-    <h2>Document List</h2>
+    <a id="fetchDocumentsBtn" href="fetch_documents.php">Document List</a>
     <ul id="document-list">
         <!-- Document list will be displayed here -->
     </ul>
