@@ -21,7 +21,7 @@ function displayDocuments($documents) {
     echo '<ul>';
     foreach ($documents as $document) {
         echo "<li>{$document['filename']} - Type: {$document['type']} - Description: {$document['description']} ";
-        echo "<a class='download-btn' href='download.php?filename={$document['filename']}'>Download</a></li>";
+        echo "<a href='download.php?filename={$document['filename']}'>Download</a></li>";
     }
     echo '</ul>';
 }
