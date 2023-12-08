@@ -1,17 +1,21 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-image: url('school.jpg');
+    background-size: cover;
+    background-position: center;
     margin: 0;
     padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    overflow: hidden; 
 }
+
 
 h1 {
     text-align: center;
-    color: #333;
+    color: hsl(0, 0%, 100%)
 }
 
 #login-form {
@@ -20,12 +24,16 @@ h1 {
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 300px;
+    background: transparent;
+    backdrop-filter: blur(20px);
+    border: 2px solid rgba(255, 255, 255, .2);
+    color: #fff;
 }
 
 label {
     display: block;
     margin-bottom: 8px;
-    color: #555;
+    color: hsl(0, 2%, 76%);
 }
 
 input {
